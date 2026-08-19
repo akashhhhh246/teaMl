@@ -1,0 +1,112 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String                  @id @default(uuid())
+  email           String                  @unique
+  passwordHash    String
+  name            String
+  role            String                  @default("USER") // USER, ADMIN, SOMMELIER
+  avatar          String?
+  bio             String?
+  preferences     String?                 // JSON string of saved baseline preferences
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+
+  favorites       Favorite[]
+  reviews         Review[]
+  recommendations RecommendationHistory[]
+  moodLogs        MoodLog[]
+}
+
+model Tea {
+  id               String      @id
+  name             String
+  origin           String
+  teaType          String
+  ingredients      String
+  flavorProfile    String      // JSON string of string array
+  bitterness       Float       @default(5.0)
+  sweetness        Float       @default(5.0)
+  floralNotes      Float       @default(5.0)
+  spiceLevel       Float       @default(3.0)
+  aroma            Float       @default(7.0)
+  caffeine         Int         @default(35)
+  calories         Int         @default(0)
+  preparationTime  Int         @default(3)
+  steepTemperature Int         @default(85)
+  waterRatio       String      @default("2.5g / 200ml")
+  healthBenefits   String      // JSON string of string array
+  moodTags         String      // JSON string of string array
+  season           String      @default("All Season")
+  price            Float       @default(24.0)
+  rating           Float       @default(4.8)
+  reviewsCount     Int         @default(24)
+  description      String
+  foodPairings     String      // JSON string of string array
+  imageUrl         String
+  isFeatured       Boolean     @default(false)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  favorites        Favorite[]
+  reviews          Review[]
+}
+
+model RecommendationHistory {
+  id              String   @id @default(uuid())
+  userId          String?
+  quizInputs      String   // JSON string of 19 quiz features
+  recommendedTeas String   // JSON string of top 5 recommendations with XAI
+  activeModel     String   @default("Hybrid Ensemble")
+  createdAt       DateTime @default(now())
+
+  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String
+  teaId     String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tea       Tea      @relation(fields: [teaId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, teaId])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  userId    String
+  teaId     String
+  rating    Int      @default(5)
+  title     String?
+  comment   String
+  imageUrl  String?
+  upvotes   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tea       Tea      @relation(fields: [teaId], references: [id], onDelete: Cascade)
+}
+
+model MoodLog {
+  id                 String   @id @default(uuid())
+  userId             String
+  mood               String
+  stressLevel        Int      @default(5)
+  energyLevel        Int      @default(5)
+  note               String?
+  recommendedTeaId   String?
+  createdAt          DateTime @default(now())
+
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

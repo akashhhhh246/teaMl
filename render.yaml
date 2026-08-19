@@ -1,0 +1,53 @@
+services:
+  # Python FastAPI Machine Learning Service
+  - type: web
+    name: teaml-ml-service
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "cd ml-service && pip install -r requirements.txt && python app/data/dataset_generator.py"
+    startCommand: "cd ml-service && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ML_HOST
+        value: 0.0.0.0
+
+  # Node.js Backend API Gateway
+  - type: web
+    name: teaml-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: "cd backend && npm install && npx prisma generate && npx prisma db push && node prisma/seed.js"
+    startCommand: "cd backend && npm start"
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:./dev.db
+      - key: JWT_SECRET
+        value: teaml_super_secure_jwt_token_india_2026
+      - key: ML_SERVICE_URL
+        fromService:
+          type: web
+          name: teaml-ml-service
+          property: url
+
+  # React Frontend Single Page Application
+  - type: web
+    name: teaml-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
+    routes:
+      - type: rewrite
+        source: "/api/*"
+        destination: "https://teaml-backend.onrender.com/api/*"
+      - type: rewrite
+        source: "/*"
+        destination: "/index.html"

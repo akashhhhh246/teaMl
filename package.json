@@ -1,0 +1,26 @@
+{
+  "name": "teaml-platform",
+  "version": "1.0.0",
+  "description": "TeaML - AI-Powered Tea Recommendation & Sommelier SaaS Platform",
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:ml": "cd ml-service && python main.py",
+    "seed": "cd backend && npm run seed",
+    "test:backend": "cd backend && npm test",
+    "test:ml": "python -m pytest ml-service/tests/",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "tea",
+    "machine-learning",
+    "fastapi",
+    "react",
+    "express",
+    "scikit-learn",
+    "prisma",
+    "sommelier"
+  ],
+  "author": "TeaML Engineering",
+  "license": "MIT"
+}
