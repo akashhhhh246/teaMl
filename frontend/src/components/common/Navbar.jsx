@@ -8,7 +8,6 @@ import {
   Moon,
   Menu,
   X,
-  ShieldCheck,
 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -21,8 +20,7 @@ export function Navbar() {
   const navLinks = [
     { label: 'Explore Teas', path: '/teas', icon: Compass },
     { label: 'Taste Quiz', path: '/quiz', icon: Sparkles },
-    { label: 'Taste Insights', path: '/analytics', icon: BarChart3 },
-    { label: 'Tea Cellar', path: '/admin', icon: ShieldCheck },
+    { label: 'Terroir & Taste Science', path: '/analytics', icon: BarChart3 },
   ];
 
   const isActive = (path) => location.pathname === path;

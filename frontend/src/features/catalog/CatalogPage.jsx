@@ -194,10 +194,9 @@ export function CatalogPage() {
               onChange={(e) => setSortBy(e.target.value)}
               className="w-full p-2 rounded-xl text-xs bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white"
             >
-              <option value="rating">Top Rated by Connoisseurs</option>
+              <option value="rating">Sensory Rating</option>
               <option value="price">Price (₹ High to Low)</option>
-              <option value="reviews">Most Reviewed</option>
-              <option value="name">Alphabetical</option>
+              <option value="name">Alphabetical (A-Z)</option>
             </select>
           </div>
 

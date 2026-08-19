@@ -327,55 +327,95 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Verified Connoisseurs */}
+      {/* Authentic Indian Terroirs Showcase (Replaced Fake Testimonials) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-14">
           <Badge variant="amber" size="md">
-            Connoisseur Reviews
+            Iconic Indian Terroirs
           </Badge>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-2 font-sans">
-            Praised Across Darjeeling, Assam & Nilgiris
+            Centuries of Heritage Across 6 Renowned Regions
           </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto mt-2">
+            Every harvest in TeaML is calibrated to the microclimate, soil elevation, and traditional processing of its originating estate.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             {
-              name: 'Dr. Ananya Banerjee',
-              title: 'Ayurvedic Botanist, Pune',
-              quote: 'TeaML brings remarkable nuance to traditional herbal infusions. The Tulsi-Ashwagandha recommendations for evening relaxation are truly exceptional.',
-              avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+              region: 'Darjeeling',
+              state: 'West Bengal',
+              elevation: '600m – 2,000m',
+              flavor: 'Muscatel, Green Apple, Honeysuckle',
+              tagline: 'The Champagne of Teas',
+              desc: 'High Himalayan slopes and cool mist yield light amber spring flushes with delicate floral and muscatel grape notes.',
             },
             {
-              name: 'Vikramaditya Roy',
-              title: 'Tea Estate Specialist, Upper Assam',
-              quote: 'The accuracy with which it captures Assam orthodox malty liquor and Kadak chai brewing ratios is remarkable. A delight for any tea connoisseur.',
-              avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+              region: 'Upper Assam',
+              state: 'Brahmaputra Valley',
+              elevation: '100m – 200m',
+              flavor: 'Malty, Dark Cocoa, Molasses',
+              tagline: 'Bold & Malty Morning Kadak',
+              desc: 'Rich alluvial soil and tropical heat create deeply colored, full-bodied leaves perfect for authentic spiced milk chai.',
             },
             {
-              name: 'Meenakshi Iyer',
-              title: 'Tea Taster, Coonoor, Nilgiris',
-              quote: 'I use TeaML to time my single-estate Darjeeling flushes and Nilgiri frost teas. It captures terroir notes with extraordinary precision.',
-              avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
+              region: 'Kashmir Valley',
+              state: 'Pampore & Srinagar',
+              elevation: '1,600m – 2,200m',
+              flavor: 'Saffron (Kesar), Cardamom, Almonds',
+              tagline: 'Samovar Heritage Infusion',
+              desc: 'Green tea leaves infused with pure Pampore saffron strands, crushed almonds, and cinnamon for warming restorative brew.',
+            },
+            {
+              region: 'Nilgiri Blue Mountains',
+              state: 'Tamil Nadu Highlands',
+              elevation: '1,200m – 2,400m',
+              flavor: 'Bright Citrus, Crisp Plum, Floral Honey',
+              tagline: 'High-Altitude Winter Frost',
+              desc: 'Plucked during winter frost in Southern India’s misty mountains, producing brisk, intensely fragrant golden liquors.',
+            },
+            {
+              region: 'Kangra Valley',
+              state: 'Himachal Pradesh',
+              elevation: '1,000m – 1,500m',
+              flavor: 'Pine Cedar, Sweet Vegetal, Roasted Grain',
+              tagline: 'Himalayan GI-Tagged Green',
+              desc: 'Protected geographical indication tea known for high polyphenol antioxidants and smooth, sweet cedar characteristics.',
+            },
+            {
+              region: 'Sikkim Temi Estate',
+              state: 'South Sikkim',
+              elevation: '1,400m – 1,850m',
+              flavor: 'Orchid Floral, Sweet Apricot, Light Honey',
+              tagline: 'Organic Mountain Mist',
+              desc: 'Sikkim’s solitary organic estate beneath Mount Kanchenjunga produces rare, sweet-scented orthodox orthodox flushes.',
             },
           ].map((t, idx) => (
-            <div key={idx} className="glass-card rounded-3xl p-6 flex flex-col justify-between">
+            <div key={idx} className="glass-card rounded-3xl p-6 flex flex-col justify-between hover:border-emerald-500/40 transition-all duration-300">
               <div>
-                <div className="flex text-amber-400 gap-1 mb-4">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400" />
-                  ))}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    {t.state}
+                  </span>
+                  <span className="text-[11px] text-slate-400 font-medium">
+                    {t.elevation}
+                  </span>
                 </div>
-                <p className="text-xs text-slate-700 dark:text-slate-300 italic leading-relaxed mb-6">
-                  "{t.quote}"
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                  {t.region}
+                </h3>
+                <div className="text-xs font-semibold text-amber-600 dark:text-amber-400 mt-0.5 mb-3">
+                  {t.tagline}
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                  {t.desc}
                 </p>
               </div>
-              <div className="flex items-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover border border-emerald-500/40" />
-                <div>
-                  <div className="text-xs font-bold text-slate-900 dark:text-white">{t.name}</div>
-                  <div className="text-[11px] text-slate-500">{t.title}</div>
-                </div>
+
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 text-[11px] text-slate-500 flex items-center justify-between">
+                <span className="font-semibold text-slate-700 dark:text-slate-300">Palate:</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-medium truncate max-w-[75%] text-right">{t.flavor}</span>
               </div>
             </div>
           ))}

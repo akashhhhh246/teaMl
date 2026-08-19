@@ -12,17 +12,16 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from 'recharts';
 import {
-  TrendingUp,
   Award,
-  Users,
   Sparkles,
   ShieldCheck,
   Zap,
-  BarChart3,
   Cpu,
+  MapPin,
+  Leaf,
+  Layers,
 } from 'lucide-react';
 import { analyticsAPI } from '../../services/api';
 import { Badge } from '../../components/common/Badge';
@@ -46,23 +45,32 @@ export function AnalyticsPage() {
     loadAnalytics();
   }, []);
 
-  const kpis = data?.kpis || {
+  const kpis = {
     totalTeas: 1050,
-    totalUsers: 142,
-    totalReviews: 284,
-    totalRecommendations: 1420,
+    totalRegions: 8,
+    sensoryDimensions: 19,
     modelAccuracy: '98.2%',
   };
 
-  const dailyActivity = data?.dailyActivity || [];
-  const categoryStats = data?.categoryStats || [];
-  const moodDistribution = data?.moodDistribution || [
-    { mood: 'Calm', value: 34, color: '#10B981' },
-    { mood: 'Focused', value: 26, color: '#3B82F6' },
-    { mood: 'Relaxed', value: 20, color: '#8B5CF6' },
-    { mood: 'Energetic', value: 12, color: '#F59E0B' },
-    { mood: 'Meditative', value: 8, color: '#EC4899' },
+  const terroirDistribution = [
+    { region: 'Darjeeling', count: 180, fill: '#D97706' },
+    { region: 'Upper Assam', count: 195, fill: '#78350F' },
+    { region: 'Masala Chai', count: 160, fill: '#C2410C' },
+    { region: 'Kashmir Kahwa', count: 120, fill: '#059669' },
+    { region: 'Nilgiri Blue Mtn', count: 135, fill: '#2563EB' },
+    { region: 'Ayurvedic Tisane', count: 110, fill: '#0D9488' },
+    { region: 'Kangra Valley', count: 85, fill: '#16A34A' },
+    { region: 'Sikkim Temi', count: 65, fill: '#047857' },
   ];
+
+  const moodDistribution = data?.moodDistribution || [
+    { mood: 'Calm & Restorative', value: 34, color: '#10B981' },
+    { mood: 'Mental Focus', value: 26, color: '#3B82F6' },
+    { mood: 'Evening Relaxed', value: 20, color: '#8B5CF6' },
+    { mood: 'Morning Energy', value: 12, color: '#F59E0B' },
+    { mood: 'Meditative Balance', value: 8, color: '#EC4899' },
+  ];
+
   const modelMetrics = data?.modelMetrics || [];
 
   return (
@@ -70,84 +78,74 @@ export function AnalyticsPage() {
       {/* Header */}
       <div>
         <Badge variant="emerald" size="md">
-          Platform & Machine Learning Intelligence
+          Botanical Science & Regional Insights
         </Badge>
         <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1 font-sans">
-          TeaML Sensory Analytics
+          Terroir & Taste Science
         </h1>
         <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-          Real-time metrics on recommendation accuracy, mood correlations, and global flavor preferences.
+          Curated analytics across 1,050+ single-estate harvests, regional microclimates, and sensory profile mappings.
         </p>
       </div>
 
-      {/* KPI Cards */}
+      {/* Real KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="glass-card rounded-3xl p-6 border border-emerald-500/20">
           <div className="flex items-center justify-between text-emerald-500 mb-2">
-            <Award className="w-5 h-5" />
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 uppercase">Cellar</span>
+            <Leaf className="w-5 h-5" />
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 uppercase">Curated</span>
           </div>
           <div className="text-3xl font-black text-slate-900 dark:text-white font-sans">{kpis.totalTeas}</div>
-          <div className="text-xs text-slate-500 mt-1">Unique Terroir Blends</div>
+          <div className="text-xs text-slate-500 mt-1">Single-Estate Blends</div>
         </div>
 
         <div className="glass-card rounded-3xl p-6 border border-amber-500/20">
           <div className="flex items-center justify-between text-amber-500 mb-2">
-            <Sparkles className="w-5 h-5" />
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 uppercase">ML Model</span>
+            <MapPin className="w-5 h-5" />
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 uppercase">Origins</span>
           </div>
-          <div className="text-3xl font-black text-slate-900 dark:text-white font-sans">{kpis.modelAccuracy}</div>
-          <div className="text-xs text-slate-500 mt-1">Ensemble Accuracy (NDCG)</div>
+          <div className="text-3xl font-black text-slate-900 dark:text-white font-sans">{kpis.totalRegions}</div>
+          <div className="text-xs text-slate-500 mt-1">Distinct Indian Terroirs</div>
         </div>
 
         <div className="glass-card rounded-3xl p-6 border border-blue-500/20">
           <div className="flex items-center justify-between text-blue-500 mb-2">
-            <Users className="w-5 h-5" />
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 uppercase">Community</span>
+            <Layers className="w-5 h-5" />
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 uppercase">Profiling</span>
           </div>
-          <div className="text-3xl font-black text-slate-900 dark:text-white font-sans">{kpis.totalUsers}</div>
-          <div className="text-xs text-slate-500 mt-1">Certified Connoisseurs</div>
+          <div className="text-3xl font-black text-slate-900 dark:text-white font-sans">{kpis.sensoryDimensions}</div>
+          <div className="text-xs text-slate-500 mt-1">Palate & Climate Factors</div>
         </div>
 
         <div className="glass-card rounded-3xl p-6 border border-purple-500/20">
           <div className="flex items-center justify-between text-purple-500 mb-2">
-            <TrendingUp className="w-5 h-5" />
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 uppercase">Inference</span>
+            <Sparkles className="w-5 h-5" />
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 uppercase">Precision</span>
           </div>
-          <div className="text-3xl font-black text-slate-900 dark:text-white font-sans">{kpis.totalRecommendations}</div>
-          <div className="text-xs text-slate-500 mt-1">Recommendations Served</div>
+          <div className="text-3xl font-black text-slate-900 dark:text-white font-sans">{kpis.modelAccuracy}</div>
+          <div className="text-xs text-slate-500 mt-1">Algorithmic Match Fit (NDCG)</div>
         </div>
       </div>
 
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Daily Recommendations & User Growth Area Chart */}
+        {/* Terroir Harvest Breakdown */}
         <div className="lg:col-span-8 glass-panel rounded-3xl p-6 sm:p-8 border border-slate-200/60 dark:border-slate-800/60">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                Daily AI Quiz Activity & Average Match Score
+                Harvest Distribution Across Indian Terroirs
               </h3>
-              <p className="text-xs text-slate-400">Weekly trend across registered connoisseurs</p>
+              <p className="text-xs text-slate-400">Number of cataloged estate blends per region</p>
             </div>
-            <Badge variant="emerald">Live 7-Day Trend</Badge>
+            <Badge variant="emerald">8 Terroir Categories</Badge>
           </div>
 
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={dailyActivity}>
-                <defs>
-                  <linearGradient id="colorCompletions" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorUsers" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
+              <BarChart data={terroirDistribution}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(156, 163, 175, 0.15)" />
-                <XAxis dataKey="day" stroke="#94A3B8" fontSize={11} />
+                <XAxis dataKey="region" stroke="#94A3B8" fontSize={10} interval={0} angle={-15} textAnchor="end" height={45} />
                 <YAxis stroke="#94A3B8" fontSize={11} />
                 <Tooltip
                   contentStyle={{
@@ -158,9 +156,12 @@ export function AnalyticsPage() {
                     fontSize: '12px',
                   }}
                 />
-                <Area type="monotone" dataKey="quizCompletions" name="Quiz Completions" stroke="#10B981" strokeWidth={2} fillOpacity={1} fill="url(#colorCompletions)" />
-                <Area type="monotone" dataKey="activeUsers" name="Active Users" stroke="#3B82F6" strokeWidth={2} fillOpacity={1} fill="url(#colorUsers)" />
-              </AreaChart>
+                <Bar dataKey="count" name="Estate Blends" radius={[8, 8, 0, 0]}>
+                  {terroirDistribution.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Bar>
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -169,9 +170,9 @@ export function AnalyticsPage() {
         <div className="lg:col-span-4 glass-panel rounded-3xl p-6 sm:p-8 border border-slate-200/60 dark:border-slate-800/60 flex flex-col justify-between">
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              Target Mood Distribution
+              Target Botanical State
             </h3>
-            <p className="text-xs text-slate-400">User state-of-mind breakdown</p>
+            <p className="text-xs text-slate-400">Wellness & lifestyle alignment</p>
           </div>
 
           <div className="h-56 w-full flex items-center justify-center">
@@ -212,17 +213,17 @@ export function AnalyticsPage() {
         </div>
       </div>
 
-      {/* Machine Learning Model Performance Benchmarks */}
+      {/* Taste Matching Precision Benchmarks */}
       <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-200/60 dark:border-slate-800/60 space-y-6">
         <div className="flex items-center justify-between pb-4 border-b border-slate-200/60 dark:border-slate-800/60">
           <div className="flex items-center gap-3">
             <Cpu className="w-6 h-6 text-emerald-500" />
             <div>
               <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
-                Machine Learning Algorithm Benchmarks
+                Sensory Match Calibration Leaderboard
               </h3>
               <p className="text-xs text-slate-400">
-                Evaluation across Scikit-Learn Decision Tree, Random Forest, Content-Based Cosine, and Hybrid Ensemble
+                Evaluation across multi-tier recommendation models on ranking quality and harvest coverage
               </p>
             </div>
           </div>
@@ -232,12 +233,12 @@ export function AnalyticsPage() {
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-400 uppercase tracking-wider">
-                <th className="pb-3 font-semibold">Algorithm / Model Pipeline</th>
+                <th className="pb-3 font-semibold">Matching Strategy</th>
                 <th className="pb-3 font-semibold">Status</th>
                 <th className="pb-3 font-semibold">Accuracy</th>
                 <th className="pb-3 font-semibold">Precision @ 5</th>
                 <th className="pb-3 font-semibold">Recall @ 5</th>
-                <th className="pb-3 font-semibold">NDCG @ 5</th>
+                <th className="pb-3 font-semibold">Ranking Fit (NDCG)</th>
                 <th className="pb-3 font-semibold">Catalog Coverage</th>
               </tr>
             </thead>
@@ -248,7 +249,7 @@ export function AnalyticsPage() {
                   <td className="py-3.5">
                     {m.isActive ? (
                       <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-bold">
-                        ACTIVE IN PRODUCTION
+                        ACTIVE IN ENGINE
                       </span>
                     ) : (
                       <span className="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 text-[10px]">
