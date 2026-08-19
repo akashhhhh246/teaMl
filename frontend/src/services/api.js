@@ -1,6 +1,6 @@
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
-async function request(endpoint, options = {}) {
+async function request(endpoint, options = {}, retries = 2) {
   const token = localStorage.getItem('teaml_token');
   const headers = {
     'Content-Type': 'application/json',
@@ -24,6 +24,11 @@ async function request(endpoint, options = {}) {
 
     return data;
   } catch (error) {
+    // If Render free-tier instance is waking up from sleep, auto-retry
+    if (retries > 0 && (error.name === 'TypeError' || error.message.includes('Failed to fetch'))) {
+      await new Promise((resolve) => setTimeout(resolve, 2500));
+      return request(endpoint, options, retries - 1);
+    }
     console.error(`[API ERROR] ${endpoint}:`, error);
     throw error;
   }
