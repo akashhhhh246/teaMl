@@ -4,82 +4,93 @@ Base URL: `http://localhost:5000/api`
 
 ---
 
-## 🔐 Authentication Endpoints
-
-### `POST /auth/register`
-Creates a new user account.
-- **Body**: `{ "name": "string", "email": "string", "password": "string" }`
-- **Response**: `{ "success": true, "data": { "user": {...}, "token": "jwt_token" } }`
-
-### `POST /auth/login`
-Authenticates existing users.
-- **Body**: `{ "email": "string", "password": "string" }`
-- **Response**: `{ "success": true, "data": { "user": {...}, "token": "jwt_token" } }`
-
-### `GET /auth/me`
-Fetches authenticated user profile and saved preferences.
-- **Headers**: `Authorization: Bearer <token>`
-
----
-
-## 🍃 Tea Catalog Endpoints
+## 🍃 Indian Tea Catalog Endpoints
 
 ### `GET /teas`
-Faceted search and pagination across 1,050+ tea blends.
+Faceted search and pagination across 1,050+ Indian estate blends.
 - **Query Params**:
   - `search`: string
-  - `teaType`: "Green" | "Black" | "Oolong" | "White" | "Tisane" | "Pu-erh" | "Matcha" | "Chai" | "Rooibos" | "Yellow"
-  - `origin`: string
-  - `mood`: string
+  - `teaType`: "Darjeeling" | "Assam" | "Masala Chai" | "Kashmir Kahwa" | "Nilgiri" | "Ayurvedic Tisane" | "Kangra Valley" | "Sikkim Temi"
+  - `origin`: string (e.g. "Darjeeling (Makaibari)", "Assam (Jorhat)", "Kashmir (Pampore)")
+  - `mood`: string (e.g. "Calm", "Focused", "Energetic", "Relaxed")
   - `healthGoal`: string
   - `caffeineMin` / `caffeineMax`: number
-  - `priceMin` / `priceMax`: number
-  - `sortBy`: "rating" | "price" | "reviews" | "name" | "newest"
+  - `priceMin` / `priceMax`: number (in ₹ INR)
+  - `sortBy`: "rating" | "price" | "reviews" | "name"
   - `sortOrder`: "asc" | "desc"
   - `page`: number (default: 1)
-  - `limit`: number (default: 20)
+  - `limit`: number (default: 12)
 
 ### `GET /teas/:id`
-Retrieves detailed sensory profile, brewing guide, and verified reviews for a specific blend.
+Retrieves detailed sensory profile, brewing guide, culinary pairings, and verified reviews for a specific blend.
 
-### `POST /teas` *(Admin Only)*
-Creates a new tea blend in the cellar.
+### `POST /teas`
+Adds a new Indian harvest blend to the cellar.
 
 ---
 
-## 🤖 AI & Recommendation Endpoints
+## 🤖 AI & Sensory Recommendation Endpoints
 
 ### `POST /recommendations/predict`
-Executes ML recommendation pipeline on 19 quiz features.
+Executes ML recommendation pipeline on 19 Indian sensory features.
 - **Body**:
 ```json
 {
-  "age": 28,
-  "country": "United States",
-  "climate": "Temperate",
-  "teaFrequency": "Daily (1-2 cups)",
-  "favoriteFlavours": ["Floral", "Honey", "Citrus"],
-  "teaStrength": "Medium Balanced",
-  "sugarPreference": "No Sugar / Pure",
-  "milkPreference": "Pure Black/Clear Tea (No Milk)",
-  "spicePreference": 3,
-  "floralPreference": 7,
-  "aromaPreference": 8,
+  "age": 26,
+  "country": "North India",
+  "climate": "Monsoon / Humid",
+  "teaFrequency": "Daily (2-3 cups Kadak Chai)",
+  "favoriteFlavours": ["Cardamom (Elaichi)", "Ginger (Adrak)", "Saffron (Kesar)"],
+  "teaStrength": "Bold & Strong",
+  "sugarPreference": "Slightly Sweet (or Jaggery/Gur)",
+  "milkPreference": "Rich Milk Tea (Kadak Chai)",
+  "spicePreference": 8,
+  "floralPreference": 5,
+  "aromaPreference": 9,
   "mood": "Calm",
   "stressLevel": 5,
   "sleepQuality": "Average",
-  "healthGoals": ["Stress Relief", "Antioxidant Boost"],
-  "budget": "Premium Artisan ($18 - $30)",
+  "healthGoals": ["Stress Relief & Calming", "Immunity Fortification (Kadha)"],
+  "budget": "Premium Single-Estate (₹500 - ₹1,200)",
+  "teaBrands": "Indian Artisan Estates (Makaibari, Halmari, Temi)",
   "caffeineTolerance": "Moderate Caffeine",
-  "preparationStyle": "Western Teapot Infuser",
+  "preparationStyle": "Simmered Stove-top Pot (Kadak Chai)",
   "modelOverride": "hybrid"
 }
 ```
-- **Response**: Top 5 recommendations with confidence scores, XAI explanations, and sensory comparison.
+- **Response**: Top 5 recommendations with match confidence scores, XAI explanations, and sensory comparison.
 
 ### `POST /chat`
-Converses with the AI Tea Sommelier.
-- **Body**: `{ "message": "How do I brew Oolong tea?", "context": {} }`
+Converses with the Indian Chai & Botanical Sommelier.
+- **Body**: `{ "message": "How do I brew authentic Kadak Masala Chai?", "context": {} }`
 
 ### `GET /recommendations/models/compare`
 Returns benchmark leaderboard comparing Decision Tree, Random Forest, Content-Based, and Hybrid models.
+
+---
+
+## 📝 Reviews & Chai Diary Endpoints
+
+### `POST /reviews`
+Submits a verified tasting note for any blend without requiring login.
+- **Body**:
+```json
+{
+  "teaId": "TEA-IN-0001",
+  "rating": 5,
+  "title": "Exquisite Muscatel Aroma",
+  "comment": "Steeped at 85°C for 3 minutes. Pure spring gold."
+}
+```
+
+### `POST /moods`
+Logs an Ayurvedic mood check-in.
+- **Body**:
+```json
+{
+  "mood": "Calm",
+  "stressLevel": 4,
+  "energyLevel: 7,
+  "note": "Afternoon ginger chai recharge"
+}
+```
