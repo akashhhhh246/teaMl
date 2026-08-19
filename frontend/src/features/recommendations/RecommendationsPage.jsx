@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import {
   Sparkles,
-  Heart,
   RotateCcw,
   CheckCircle,
   ExternalLink,
@@ -22,12 +21,10 @@ import { SteepTimer } from '../../components/common/SteepTimer';
 import { Badge } from '../../components/common/Badge';
 import { Modal } from '../../components/common/Modal';
 import { TeaImage } from '../../components/common/TeaImage';
-import { useFavorites } from '../../context/FavoritesContext';
 
 export function RecommendationsPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isFavorited, toggleFavorite } = useFavorites();
 
   const stateData = location.state?.recommendationData;
   const quizInputs = location.state?.quizInputs || {
@@ -156,13 +153,6 @@ export function RecommendationsPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <button
-                  onClick={() => toggleFavorite(activeTea)}
-                  className="p-2.5 rounded-xl glass-card text-rose-500 hover:scale-110 transition-transform shadow"
-                  title="Save to Chai Diary"
-                >
-                  <Heart className={`w-4 h-4 ${isFavorited(activeTea.id) ? 'fill-rose-500' : ''}`} />
-                </button>
                 <Link
                   to={`/teas/${activeTea.id}`}
                   className="px-3.5 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-1"

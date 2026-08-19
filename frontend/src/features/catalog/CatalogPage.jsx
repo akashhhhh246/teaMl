@@ -3,7 +3,6 @@ import { Link, useSearchParams } from 'react-router-dom';
 import {
   Search,
   SlidersHorizontal,
-  Heart,
   Star,
   Sparkles,
   ChevronLeft,
@@ -17,11 +16,9 @@ import { teasAPI } from '../../services/api';
 import { Badge } from '../../components/common/Badge';
 import { LoadingSkeleton } from '../../components/common/LoadingSkeleton';
 import { TeaImage } from '../../components/common/TeaImage';
-import { useFavorites } from '../../context/FavoritesContext';
 
 export function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { isFavorited, toggleFavorite } = useFavorites();
 
   const [teas, setTeas] = useState([]);
   const [meta, setMeta] = useState({ page: 1, totalPages: 1, totalCount: 0 });
@@ -250,12 +247,6 @@ export function CatalogPage() {
                   <div className="absolute top-2.5 left-2.5">
                     <Badge variant="emerald">{tea.teaType}</Badge>
                   </div>
-                  <button
-                    onClick={() => toggleFavorite(tea)}
-                    className="absolute top-2.5 right-2.5 p-2 rounded-full glass-card text-rose-500 hover:scale-110 transition-transform shadow"
-                  >
-                    <Heart className={`w-4 h-4 ${isFavorited(tea.id) ? 'fill-rose-500' : ''}`} />
-                  </button>
                 </div>
 
                 {/* Content Section */}

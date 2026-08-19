@@ -6,19 +6,15 @@ import {
   BarChart3,
   Sun,
   Moon,
-  Heart,
   Menu,
   X,
   ShieldCheck,
 } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
-import { useFavorites } from '../../context/FavoritesContext';
 
 export function Navbar() {
   const { isDark, toggleTheme } = useTheme();
-  const { favorites } = useFavorites();
   const location = useLocation();
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Clean, consumer-focused navigation links
@@ -78,25 +74,11 @@ export function Navbar() {
           </nav>
 
           {/* Right Action Bar */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Saved Blends Icon */}
-            <Link
-              to="/dashboard"
-              className="relative p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
-              title="Saved Blends"
-            >
-              <Heart className="w-5 h-5 text-rose-500" />
-              {favorites.length > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center shadow">
-                  {favorites.length}
-                </span>
-              )}
-            </Link>
-
+          <div className="flex items-center gap-3">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+              className="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
               {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-600" />}

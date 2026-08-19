@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Star,
-  Heart,
   Thermometer,
   Clock,
   Droplets,
@@ -20,11 +19,9 @@ import { SteepTimer } from '../../components/common/SteepTimer';
 import { Badge } from '../../components/common/Badge';
 import { Modal } from '../../components/common/Modal';
 import { TeaImage } from '../../components/common/TeaImage';
-import { useFavorites } from '../../context/FavoritesContext';
 
 export function TeaDetailPage() {
   const { id } = useParams();
-  const { isFavorited, toggleFavorite } = useFavorites();
 
   const [tea, setTea] = useState(null);
   const [reviews, setReviews] = useState([]);
@@ -157,12 +154,6 @@ export function TeaDetailPage() {
             <div className="absolute top-4 left-4">
               <Badge variant="emerald" size="lg">{tea.teaType}</Badge>
             </div>
-            <button
-              onClick={() => toggleFavorite(tea)}
-              className="absolute top-4 right-4 p-3 rounded-full glass-card text-rose-500 hover:scale-110 transition-transform shadow-lg"
-            >
-              <Heart className={`w-5 h-5 ${isFavorited(tea.id) ? 'fill-rose-500' : ''}`} />
-            </button>
           </div>
         </div>
 
